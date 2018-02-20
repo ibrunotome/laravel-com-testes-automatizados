@@ -695,7 +695,6 @@ class BanksTableSeeder extends Seeder
             ],
         ];
 
-        DB::table('banks')->truncate();
         DB::table('banks')->insert($data);
     }
 }
