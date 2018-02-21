@@ -52,4 +52,26 @@ class AccountsTest extends TestCase
             ->assertJson($data->toArray());
     }
 
+    public function testApiUpdate()
+    {
+        $data = factory(Account::class)->create();
+
+        $toUpdate = ['title' => 'Conta teste'];
+
+        $response = $this->json('PUT', '/api/accounts/' . $data->id, $toUpdate);
+
+        $response->assertStatus(200)
+            ->assertJson($toUpdate);
+    }
+
+    public function testApiDelete()
+    {
+        $data = factory(Account::class)->create();
+
+        $response = $this->json('DELETE', '/api/accounts/' . $data->id);
+
+        $response->assertStatus(200)
+            ->assertJson($data->toArray());
+    }
+
 }
