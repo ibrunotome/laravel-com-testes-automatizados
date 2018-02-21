@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Account;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AccountsTest extends TestCase
@@ -72,6 +74,20 @@ class AccountsTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson($data->toArray());
+    }
+
+    public function testApiUploadOnInsert()
+    {
+        $data = factory(Account::class)->make();
+        $data = $data->toArray();
+
+        Storage::fake('public');
+
+        $data['bank_image'] = UploadedFile::fake()->image('itau.jpg');
+
+        $response = $this->json('POST', '/api/accounts', $data);
+
+        Storage::disk('public')->assertExists('images/itau.jpg');
     }
 
 }
