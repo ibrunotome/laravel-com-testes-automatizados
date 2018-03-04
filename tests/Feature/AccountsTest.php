@@ -76,18 +76,18 @@ class AccountsTest extends TestCase
             ->assertJson($data->toArray());
     }
 
-    public function testApiUploadOnInsert()
-    {
-        $data = factory(Account::class)->make();
-        $data = $data->toArray();
+//     public function testApiUploadOnInsert()
+//     {
+//         $data = factory(Account::class)->make();
+//         $data = $data->toArray();
 
-        Storage::fake('public');
+//         Storage::fake('public');
 
-        $data['bank_image'] = UploadedFile::fake()->image('itau.jpg');
+//         $data['bank_image'] = UploadedFile::fake()->image('itau.jpg');
 
-        $response = $this->json('POST', '/api/accounts', $data);
+//         $response = $this->json('POST', '/api/accounts', $data);
 
-        Storage::disk('public')->assertExists('images/itau.jpg');
-    }
+//         Storage::disk('public')->assertExists('images/itau.jpg');
+//     }
 
 }
